@@ -1,9 +1,9 @@
-const tabs = (
+const tabs = ({
 	tabsContainerSelector,
 	tabsSelector,
 	activeTabClass,
-	contentsContainersSelector
-) => {
+	contentsContainersSelector,
+}) => {
 	const tabsContainer = document.querySelector(tabsContainerSelector);
 	const tabs = document.querySelectorAll(tabsSelector);
 	const tabsContents = document.querySelectorAll(contentsContainersSelector);
@@ -45,17 +45,24 @@ const tabs = (
 		});
 	};
 
+	const selectTab = (tab) => {
+		if (tab) {
+			currentTab = tab.dataset.tabId;
+			closeTabs();
+			showTab(currentTab);
+		}
+	};
+
 	bindTabsData();
 	closeTabs();
 	showTab(currentTab);
 
 	tabsContainer.addEventListener("click", (e) => {
-		const tab = e.target.closest(tabsSelector);
-
-		if (tab) {
-			currentTab = tab.dataset.tabId;
-			closeTabs();
-			showTab(currentTab);
+		selectTab(e.target.closest(tabsSelector));
+	});
+	tabsContainer.addEventListener("keyup", (e) => {
+		if (e.key == "Enter") {
+			selectTab(e.target.closest(tabsSelector));
 		}
 	});
 };

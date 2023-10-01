@@ -6,11 +6,16 @@ console.log("Hello World!");
 window.addEventListener("DOMContentLoaded", () => {
 	modals();
 
-	tabs(".glazing_slider", ".glazing_block", "active", ".glazing_content");
-	tabs(
-		".decoration_slider",
-		".no_click",
-		"after_click",
-		".decoration_content > div > div"
-	);
+	tabs({
+		tabsContainerSelector: ".glazing_slider",
+		tabsSelector: ".glazing_block",
+		activeTabClass: "active",
+		contentsContainersSelector: ".glazing_content",
+	});
+	tabs({
+		tabsContainerSelector: ".decoration_slider",
+		tabsSelector: ".no_click",
+		activeTabClass: "after_click",
+		contentsContainersSelector: ".decoration_content > div > div",
+	});
 });
