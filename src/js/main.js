@@ -1,6 +1,5 @@
 import "./slider.js";
-import modals from "./modules/modals.js";
-import tabs from "./modules/tabs3.js";
+import { modals, tabs } from "./modules";
 
 console.log("Hello World!");
 

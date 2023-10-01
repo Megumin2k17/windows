@@ -12,6 +12,10 @@ const modals = () => {
 
 				modal.style.display = "block";
 				document.body.style.overflow = "hidden";
+
+				if (timer) {
+					clearTimeout(timer);
+				}
 			});
 		});
 
@@ -38,7 +42,7 @@ const modals = () => {
 	};
 
 	const showModalByTime = (modalSelector, seconds) => {
-		setTimeout(() => {
+		return setTimeout(() => {
 			const modal = document.querySelector(modalSelector);
 			modal.style.display = "block";
 			document.body.style.overflow = "hidden";
@@ -53,7 +57,7 @@ const modals = () => {
 
 	bindModal(".phone_link", ".popup", ".popup .popup_close");
 
-	showModalByTime(".popup", 60);
+	let timer = showModalByTime(".popup", 3);
 };
 
-export default modals;
+export { modals };
