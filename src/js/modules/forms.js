@@ -34,7 +34,7 @@ const forms = () => {
 			body: JSON.stringify(data),
 		});
 
-		return await result.json();
+		return await result.text();
 	};
 
 	const clearInputs = () => {
