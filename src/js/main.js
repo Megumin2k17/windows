@@ -1,5 +1,5 @@
 import "./slider.js";
-import { modals, tabs } from "./modules";
+import { modals, tabs, forms } from "./modules";
 
 console.log("Hello World!");
 
@@ -18,4 +18,6 @@ window.addEventListener("DOMContentLoaded", () => {
 		activeTabClass: "after_click",
 		contentsContainersSelector: ".decoration_content > div > div",
 	});
+
+	forms();
 });
