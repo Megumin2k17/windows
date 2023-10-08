@@ -31,7 +31,7 @@ const forms = () => {
 			headers: {
 				"Content-Type": "application/json;charset=utf-8",
 			},
-			body: JSON.stringify(data),
+			body: JSON.stringify(Object.fromEntries(data)),
 		});
 
 		return await result.text();
@@ -51,7 +51,7 @@ const forms = () => {
 
 			const formData = new FormData(form);
 
-			postData("https://simple-server-cumz.onrender.com/api/data", formData)
+			postData("https://simple-server-bo5w.onrender.com/api/data", formData)
 				.then((result) => {
 					console.log(result);
 					setFormStatusMessage(messages.success);
