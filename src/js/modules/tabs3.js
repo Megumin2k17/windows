@@ -3,6 +3,7 @@ const tabs = ({
 	tabsSelector,
 	activeTabClass,
 	contentsContainersSelector,
+	display = "block",
 }) => {
 	const tabsContainer = document.querySelector(tabsContainerSelector);
 	const tabs = document.querySelectorAll(tabsSelector);
@@ -29,7 +30,7 @@ const tabs = ({
 	const showTab = (idx) => {
 		tabs[idx].classList.add(activeTabClass);
 
-		tabsContents[idx].style.display = "block";
+		tabsContents[idx].style.display = display;
 	};
 
 	const closeTabs = () => {
