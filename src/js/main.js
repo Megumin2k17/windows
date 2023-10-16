@@ -1,9 +1,13 @@
 import "./slider.js";
-import { modals, tabs, forms } from "./modules";
+import { modals, tabs, forms, changeModalState } from "./modules";
 
 console.log("Hello World!");
 
 window.addEventListener("DOMContentLoaded", () => {
+	const modalState = {};
+
+	changeModalState(modalState);
+
 	modals();
 
 	tabs({
@@ -26,5 +30,5 @@ window.addEventListener("DOMContentLoaded", () => {
 		display: "inline-block",
 	});
 
-	forms();
+	forms(modalState);
 });
