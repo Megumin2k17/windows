@@ -75,4 +75,16 @@ const changeModalState = (state) => {
 	});
 };
 
-export { changeModalState };
+const resetState = (state) => {
+	state = {
+		form: 0,
+		width: "",
+		height: "",
+		type: "tree",
+		profile: "",
+	};
+
+	console.log(state);
+};
+
+export { changeModalState, resetState };

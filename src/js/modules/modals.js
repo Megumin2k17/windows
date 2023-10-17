@@ -1,14 +1,14 @@
-const modals = () => {
+const modals = (state) => {
 	const bindModal = ({
 		triggersSelectors,
 		modalSelector,
 		closeSelector,
 		closeByClickOverlay = true,
+		validate = false,
 	}) => {
 		const triggers = document.querySelectorAll(triggersSelectors);
 		const modal = document.querySelector(modalSelector);
 		const close = document.querySelector(closeSelector);
-		const modals = document.querySelectorAll("[data-modal]");
 
 		triggers.forEach((trigger) => {
 			trigger.addEventListener("click", (e) => {
@@ -24,36 +24,85 @@ const modals = () => {
 				if (timer) {
 					clearTimeout(timer);
 				}
+
+				if (validate) {
+					if (modalValuesNotEmpty(validate)) {
+						modalBtnEnable();
+					} else {
+						modalBtnDisable();
+					}
+					validateModalValues(validate);
+				}
 			});
 		});
 
 		close.addEventListener("click", () => {
-			closeModal();
+			closeModal(modal);
 		});
 
 		document.addEventListener("keydown", function (e) {
 			if (e.key === "Escape") {
-				closeModal();
+				closeModal(modal);
 			}
 		});
 
 		modal.addEventListener("click", (e) => {
 			if (e.target === modal && closeByClickOverlay) {
-				closeModal();
+				closeModal(modal);
 				closeModals();
 			}
 		});
 
-		const closeModal = () => {
-			closeModals();
-			modal.style.display = "none";
-			document.body.style.overflow = "";
+		const validateModalValues = (fields) => {
+			const inputs = modal.querySelectorAll("input");
+			const checkboxes = modal.querySelectorAll(".checkbox");
+
+			inputs.forEach((input) => {
+				input.addEventListener("input", () => {
+					if (modalValuesNotEmpty(fields)) {
+						modalBtnEnable();
+					} else {
+						modalBtnDisable();
+					}
+				});
+			});
+
+			checkboxes.forEach((checkbox) => {
+				checkbox.addEventListener("change", (e) => {
+					if (modalValuesNotEmpty(fields)) {
+						modalBtnEnable();
+					} else {
+						modalBtnDisable();
+					}
+				});
+			});
 		};
 
-		const closeModals = () => {
-			modals.forEach((modal) => {
-				modal.style.display = "none";
+		const modalValuesNotEmpty = (fields) => {
+			const values = [];
+
+			fields.forEach((field) => {
+				values.push(state[field]);
 			});
+			console.log(values);
+
+			if (values.every((value) => value != "")) {
+				return true;
+			}
+
+			return false;
+		};
+
+		const modalBtnEnable = () => {
+			const next = modal.querySelector(".button");
+			next.disabled = false;
+			next.style.opacity = "";
+		};
+
+		const modalBtnDisable = () => {
+			const next = modal.querySelector(".button");
+			next.disabled = true;
+			next.style.opacity = ".55";
 		};
 	};
 
@@ -81,6 +130,7 @@ const modals = () => {
 		triggersSelectors: ".popup_calc_btn",
 		modalSelector: ".popup_calc",
 		closeSelector: ".popup_calc_close",
+		validate: ["width", "height"],
 	});
 
 	bindModal({
@@ -88,6 +138,7 @@ const modals = () => {
 		modalSelector: ".popup_calc_profile",
 		closeSelector: ".popup_calc_profile_close",
 		closeByClickOverlay: false,
+		validate: ["profile"],
 	});
 
 	bindModal({
@@ -100,4 +151,25 @@ const modals = () => {
 	let timer = showModalByTime(".popup", 60);
 };
 
-export { modals };
+const closeModal = (modal) => {
+	modal.style.display = "none";
+	document.body.style.overflow = "";
+};
+
+const closeModals = (seconds) => {
+	const modals = document.querySelectorAll("[data-modal]");
+
+	if (seconds) {
+		setTimeout(() => {
+			modals.forEach((modal) => {
+				closeModal(modal);
+			});
+		}, 1000 * seconds);
+	} else {
+		modals.forEach((modal) => {
+			closeModal(modal);
+		});
+	}
+};
+
+export { modals, closeModals };

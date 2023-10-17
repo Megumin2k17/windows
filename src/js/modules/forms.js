@@ -1,4 +1,6 @@
 import { validateInputsForNumbers } from "./validateInputsForNumbers.js";
+import { closeModals } from "./modals.js";
+import { resetState } from "./changeModalState.js";
 
 const forms = (state) => {
 	const forms = document.querySelectorAll("form");
@@ -74,7 +76,9 @@ const forms = (state) => {
 				})
 				.finally(() => {
 					clearInputs();
-					removeFormStatusMessage(5);
+					removeFormStatusMessage(3);
+					closeModals(3);
+					resetState(state);
 				});
 		});
 	});

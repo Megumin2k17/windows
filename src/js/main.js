@@ -4,11 +4,17 @@ import { modals, tabs, forms, changeModalState } from "./modules";
 console.log("Hello World!");
 
 window.addEventListener("DOMContentLoaded", () => {
-	const modalState = {};
+	const modalState = {
+		form: 0,
+		width: "",
+		height: "",
+		type: "tree",
+		profile: "",
+	};
 
 	changeModalState(modalState);
 
-	modals();
+	modals(modalState);
 
 	tabs({
 		tabsContainerSelector: ".glazing_slider",
