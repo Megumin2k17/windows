@@ -84,7 +84,6 @@ const modals = (state) => {
 			fields.forEach((field) => {
 				values.push(state[field]);
 			});
-			console.log(values);
 
 			if (values.every((value) => value != "")) {
 				return true;
