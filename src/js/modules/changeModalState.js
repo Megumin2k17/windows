@@ -19,19 +19,7 @@ const changeModalState = (state) => {
 					case "SPAN":
 						state[property] = idx;
 						break;
-					case "INPUT":
-						if (element.getAttribute("type") === "radio") {
-							state[property] = element.value;
-							// idx === 0
-							// 	? (state[property] = "Холодное")
-							// 	: (state[property] = "Теплое");
-							// console.log(element.value);
-							// switchCheckbox(elements, idx);
-						} else {
-							state[property] = element.value;
-						}
-						break;
-					case "SELECT":
+					default:
 						state[property] = element.value;
 						break;
 				}
@@ -40,15 +28,6 @@ const changeModalState = (state) => {
 			});
 		});
 	};
-
-	// const switchCheckbox = (checkboxes, activeCheckboxId) => {
-	// 	checkboxes.forEach((checkbox, idx) => {
-	// 		checkbox.checked = false;
-	// 		if (activeCheckboxId == idx) {
-	// 			checkbox.checked = true;
-	// 		}
-	// 	});
-	// };
 
 	bindActionToElements({
 		event: "click",

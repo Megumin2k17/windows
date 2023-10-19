@@ -1056,7 +1056,7 @@ textarea:focus {
 	outline: none;
 }
 
-.popup_calc_profile_content .checkbox {
+.visually-hidden {
 	border: 0;
 	clip: rect(0 0 0 0);
 	clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
@@ -1069,7 +1069,8 @@ textarea:focus {
 	width: 1px;
 	white-space: nowrap;
 }
-.popup_calc_profile_content label:has(.checkbox:focus) {
+
+.popup_calc_profile_content label:has(.visually-hidden:focus) {
 	outline: thick dashed;
 	outline-offset: 5px;
 }
