@@ -1,17 +1,12 @@
-const forms = () => {
+import { validateInputsForNumbers } from "./validateInputsForNumbers.js";
+import { closeModals } from "./modals.js";
+import { resetState } from "./changeModalState.js";
+
+const forms = (state) => {
 	const forms = document.querySelectorAll("form");
 	const inputs = document.querySelectorAll("input");
-	const phoneInputs = document.querySelectorAll("input[name='user_phone']");
 
-	phoneInputs.forEach((phoneInput) => {
-		phoneInput.addEventListener("input", () => {
-			validatePhoneInput(phoneInput);
-		});
-	});
-
-	const validatePhoneInput = (phoneInput) => {
-		phoneInput.value = phoneInput.value.replace(/\D/, "");
-	};
+	validateInputsForNumbers("input[name='user_phone']");
 
 	const messages = {
 		loading: "Loading...",
@@ -54,6 +49,14 @@ const forms = () => {
 		});
 	};
 
+	const addStateDataToFormData = (form, formData) => {
+		if (form.getAttribute("data-calc") === "complete") {
+			for (let key in state) {
+				formData.append(key, state[key]);
+			}
+		}
+	};
+
 	forms.forEach((form) => {
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();
@@ -61,6 +64,7 @@ const forms = () => {
 			createFormStatusMessage(form);
 
 			const formData = new FormData(form);
+			addStateDataToFormData(form, formData);
 
 			postData("https://simple-server-bo5w.onrender.com/api/data", formData)
 				.then((result) => {
@@ -72,7 +76,9 @@ const forms = () => {
 				})
 				.finally(() => {
 					clearInputs();
-					removeFormStatusMessage(5);
+					removeFormStatusMessage(3);
+					closeModals(3);
+					resetState(state);
 				});
 		});
 	});
