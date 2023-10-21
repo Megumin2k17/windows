@@ -1,26 +1,30 @@
-const timer = (timerSelector, endTime) => {
+const timer = (timerSelectors, endTime) => {
 	const getRemainingTime = (endTime) => {
-		const remainingTime = Date.parse(endTime) - Date.parse(new Date());
-		const seconds = Math.floor((remainingTime / 1000) % 60);
-		const minutes = Math.floor((remainingTime / 1000 / 60) % 60);
-		const hours = Math.floor((remainingTime / (1000 * 60 * 60)) % 60);
-		const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+		const currentTime = new Date();
+		const timeLeft = new Date(endTime - currentTime);
+		const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+		const [hoursLeft, minutesLeft, secondsLeft] = timeLeft
+			.toLocaleTimeString("ru-RU", {
+				hour12: false,
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})
+			.split(":");
 
 		return {
-			total: remainingTime,
-			seconds,
-			minutes,
-			hours,
-			days,
+			seconds: secondsLeft,
+			minutes: minutesLeft,
+			hours: hoursLeft,
+			days: daysLeft,
 		};
 	};
 
 	const setClock = (selectors, endTime) => {
-		const timer = document.querySelector(selectors.timerSelector);
-		const days = timer.querySelector(selectors.daysSelector);
-		const hours = timer.querySelector(selectors.hoursSelector);
-		const minutes = timer.querySelector(selectors.minutesSelector);
-		const seconds = timer.querySelector(selectors.secondsSelector);
+		const days = document.querySelector(selectors.daysSelector);
+		const hours = document.querySelector(selectors.hoursSelector);
+		const minutes = document.querySelector(selectors.minutesSelector);
+		const seconds = document.querySelector(selectors.secondsSelector);
 
 		const timeInterval = setInterval(updateClock, 1000);
 		updateClock();
@@ -29,39 +33,17 @@ const timer = (timerSelector, endTime) => {
 			const remainingTime = getRemainingTime(endTime);
 
 			if (remainingTime.total <= 0) {
-				days.textContent = "00";
-				hours.textContent = "00";
-				minutes.textContent = "00";
-				seconds.textContent = "00";
-
 				clearInterval(timeInterval);
 			}
 
-			days.textContent = formatNumbers(remainingTime.days);
-			hours.textContent = formatNumbers(remainingTime.hours);
-			minutes.textContent = formatNumbers(remainingTime.minutes);
-			seconds.textContent = formatNumbers(remainingTime.seconds);
-		}
-
-		function formatNumbers(num) {
-			if (num <= 9) {
-				return "0" + num;
-			} else {
-				return num;
-			}
+			days.textContent = remainingTime.days;
+			hours.textContent = remainingTime.hours;
+			minutes.textContent = remainingTime.minutes;
+			seconds.textContent = remainingTime.seconds;
 		}
 	};
 
-	setClock(
-		{
-			timerSelector,
-			secondsSelector: "#seconds",
-			minutesSelector: "#minutes",
-			hoursSelector: "#hours",
-			daysSelector: "#days",
-		},
-		endTime
-	);
+	setClock(timerSelectors, endTime);
 };
 
 export { timer };
