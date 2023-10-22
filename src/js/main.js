@@ -1,5 +1,12 @@
 import "./slider.js";
-import { modals, tabs, forms, changeModalState, timer } from "./modules";
+import {
+	modals,
+	tabs,
+	forms,
+	changeModalState,
+	timer,
+	images,
+} from "./modules";
 
 console.log("Hello World!");
 
@@ -49,4 +56,6 @@ window.addEventListener("DOMContentLoaded", () => {
 		},
 		timeEnd
 	);
+
+	images(".works");
 });
