@@ -1,5 +1,5 @@
 import "./slider.js";
-import { modals, tabs, forms, changeModalState } from "./modules";
+import { modals, tabs, forms, changeModalState, timer } from "./modules";
 
 console.log("Hello World!");
 
@@ -11,6 +11,8 @@ window.addEventListener("DOMContentLoaded", () => {
 		type: "tree",
 		profile: "",
 	};
+
+	const timeEnd = new Date("2023-10-31T23:59:59");
 
 	changeModalState(modalState);
 
@@ -37,4 +39,14 @@ window.addEventListener("DOMContentLoaded", () => {
 	});
 
 	forms(modalState);
+
+	timer(
+		{
+			secondsSelector: "#seconds",
+			minutesSelector: "#minutes",
+			hoursSelector: "#hours",
+			daysSelector: "#days",
+		},
+		timeEnd
+	);
 });
