@@ -9,6 +9,10 @@ const modals = (state) => {
 		const triggers = document.querySelectorAll(triggersSelectors);
 		const modal = document.querySelector(modalSelector);
 		const close = document.querySelector(closeSelector);
+		const scrollWidth = calcScrollWidth();
+		// document.querySelector("body").offsetWidth -
+		// document.querySelector("body").clientWidth;
+		console.log(scrollWidth);
 
 		triggers.forEach((trigger) => {
 			trigger.addEventListener("click", (e) => {
@@ -20,6 +24,7 @@ const modals = (state) => {
 
 				modal.style.display = "block";
 				document.body.style.overflow = "hidden";
+				document.body.style.paddingRight = `${scrollWidth}px`;
 
 				if (timer) {
 					clearTimeout(timer);
@@ -110,7 +115,20 @@ const modals = (state) => {
 			const modal = document.querySelector(modalSelector);
 			modal.style.display = "block";
 			document.body.style.overflow = "hidden";
+			document.body.style.paddingRight = "0px";
 		}, seconds * 1000);
+	};
+
+	const calcScrollWidth = () => {
+		const div = document.createElement("div");
+
+		div.style.cssText = `width:50px; height:50px; overflow-y:scroll; visibility:hidden;`;
+
+		document.body.appendChild(div);
+		const scrollWidth = div.offsetWidth - div.clientWidth;
+		div.remove();
+
+		return scrollWidth;
 	};
 
 	bindModal({
@@ -153,6 +171,7 @@ const modals = (state) => {
 const closeModal = (modal) => {
 	modal.style.display = "none";
 	document.body.style.overflow = "";
+	document.body.style.paddingRight = "0px";
 };
 
 const closeModals = (seconds) => {
