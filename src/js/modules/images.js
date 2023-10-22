@@ -2,6 +2,7 @@ const images = (imagesSectionSelector) => {
 	const imagesSection = document.querySelector(imagesSectionSelector);
 
 	const bigImg = document.createElement("img");
+	bigImg.style.cssText = `max-width:100%; padding:15px`;
 
 	const createImagePopup = () => {
 		const imgPopup = document.createElement("div");
@@ -30,7 +31,6 @@ const images = (imagesSectionSelector) => {
 		e.preventDefault();
 
 		let target = e.target;
-		console.log(target);
 
 		if (target && target.classList.contains("preview")) {
 			const path = target.parentNode.getAttribute("href");
@@ -50,7 +50,7 @@ const images = (imagesSectionSelector) => {
 
 	imagesSection.addEventListener("keydown", function (e) {
 		let target = e.target;
-		console.log(target);
+
 		const path = target.getAttribute("href");
 
 		if (e.key === "Enter") {
